@@ -1,35 +1,28 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { SearchBar } from '@/components/SearchBar'
-import { User } from '@/types'
 import { useHistory, useLocation } from 'react-router'
-import { classNames } from '@/utils'
+import { useSearchBar } from '@/hooks'
 
 export const Header: React.FC = () => {
+  // Router
   const history = useHistory()
   const location = useLocation()
 
-  // Refs
-  const searchRef = useRef() as React.MutableRefObject<HTMLInputElement>
-
-  // Handler
-  const focusSearchHandler = () => searchRef.current.focus()
-  const userSelectedHandler = (user: User) => history.push(user.login)
-
-  // Hooks
-  useEffect(focusSearchHandler)
+  // Handlers
+  const searchRef = useSearchBar((user) => {
+    // on search found
+    history.push(`/${user.login}`)
+  })
 
   return (
     <header
-      className={classNames(
-        'flex justify-center items-center bg-gray-100 transition-all p-5'
-        // location.pathname === '/' ? 'h-full' : 'h-80'
-      )}
+      className="flex justify-center items-center p-5 bg-gray-400 transition-all"
       style={{
         minHeight: location.pathname === '/' ? '100vh' : '0'
       }}
     >
       <div className="container max-w-2xl">
-        <SearchBar searchRef={searchRef} onSelectedUser={userSelectedHandler} />
+        <SearchBar searchRef={searchRef} />
       </div>
     </header>
   )

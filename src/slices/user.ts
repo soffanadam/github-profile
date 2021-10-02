@@ -5,36 +5,55 @@ import { UserState, User } from '@/types'
 export const initialState: UserState = {
   user: null,
   error: '',
-  loading: false
+  loading: false,
+  searching: false
 }
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // eslint-disable-next-line no-empty-pattern
-    getUser: (state, {}: PayloadAction<string>) => {
-      state.loading = true
-      state.error = ''
+    // eslint-disable-next-line no-empty-pattern, @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+    searchUser: (state, {}: PayloadAction<string>) => {},
+
+    // eslint-disable-next-line no-empty-pattern, @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+    getUser: (state, {}: PayloadAction<string>) => {},
+
+    searching: (state) => {
+      state.searching = true
     },
 
-    getUserError: (state, { payload }: PayloadAction<string>) => {
+    searched: (state) => {
+      state.searching = false
+    },
+
+    loading: (state) => {
+      state.loading = true
+    },
+
+    loaded: (state) => {
       state.loading = false
+    },
+
+    setError: (state, { payload }: PayloadAction<string>) => {
       state.error = payload
     },
 
-    getUserSuccess: (state, { payload }: PayloadAction<User>) => {
+    setUser: (state, { payload }: PayloadAction<User | null>) => {
       state.user = payload
-      state.loading = false
-    },
-
-    resetUserError: (state) => {
-      state.error = ''
     }
   }
 })
 
-export const { getUser, getUserError, getUserSuccess, resetUserError } =
-  userSlice.actions
+export const {
+  searchUser,
+  getUser,
+  loading,
+  loaded,
+  setError,
+  setUser,
+  searching,
+  searched
+} = userSlice.actions
 
 export default userSlice.reducer

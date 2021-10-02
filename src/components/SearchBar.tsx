@@ -3,22 +3,16 @@ import { TestID } from '@/resources/TestID'
 import { LabelText } from '@/resources/LabelText'
 import { useDispatch, useSelector } from 'react-redux'
 import { userState } from '@/selectors'
-import { getUser, resetUserError } from '@/slices/user'
-import { toast } from 'react-toastify'
+import { searchUser, setError } from '@/slices/user'
 import { classNames } from '@/utils'
-import { User } from '@/types'
 
 export type SearchBarProps = {
-  searchRef: React.MutableRefObject<HTMLInputElement>
-  onSelectedUser(user: User): void
+  searchRef?: React.MutableRefObject<HTMLInputElement>
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({
-  searchRef,
-  onSelectedUser
-}) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ searchRef }) => {
   // State
-  const { user, loading, error } = useSelector(userState)
+  const { user, searching, error } = useSelector(userState)
   const [userName, setUserName] = useState('')
 
   // Handlers
@@ -26,7 +20,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   const inputChangeHandler = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
-    if (error) dispatch(resetUserError())
+    if (error) dispatch(setError(''))
     setUserName(target.value)
   }
 
@@ -34,23 +28,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     e.preventDefault()
     if (!userName) return
 
-    dispatch(getUser(userName))
+    dispatch(searchUser(userName))
   }
 
   // Hooks
   useEffect(() => {
     if (!user) return
-    onSelectedUser(user)
     setUserName(user.login)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
-
-  useEffect(() => {
-    if (!error) return
-    toast.error(error)
-    searchRef.current.focus()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error])
 
   return (
     <form onSubmit={submitHandler}>
@@ -58,11 +43,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         data-testid={TestID.SEARCH_BAR}
         ref={searchRef}
         value={userName}
-        disabled={loading}
+        disabled={searching}
         placeholder={LabelText.INPUT_GITHUB_USERNAME}
         className={classNames(
-          'py-2.5 px-5 w-full text-lg rounded shadow focus:shadow-md focus:outline-none border',
-          error ? 'border-red-500' : 'border-transparent'
+          'py-2.5 px-5 w-full text-lg rounded shadow focus:shadow-lg focus:outline-none border',
+          error ? 'border-yellow-500' : 'border-transparent'
         )}
         onChange={inputChangeHandler}
       />
