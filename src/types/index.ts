@@ -13,8 +13,12 @@ export interface User {
 }
 
 export interface Repo {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [anyProp: string]: any
+  id: number
+  name: string
+  description?: string
+  stargazers_count: number
+  forks_count: number
+  owner: User
 }
 
 //==============================================================================
@@ -31,6 +35,7 @@ export interface UserState {
 export interface ReposState {
   repos: Repo[]
   page: number
+  hasMore: boolean
   error: string
   loading: boolean
 }

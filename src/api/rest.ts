@@ -25,7 +25,7 @@ function handlePromise<T>(axiosPromise: AxiosPromise): Promise<T> {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch(({ request, message, response }: AxiosError<any>) => {
         if (request && !response) {
-          return reject(new ApiError(LabelText.CANNOT_CONNECT_TO_SERVER))
+          return reject(new ApiError(LabelText.NO_CONNECTION))
         }
 
         if (response) {

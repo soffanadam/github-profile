@@ -7,7 +7,7 @@ import { searchUser, setError } from '@/slices/user'
 import { classNames } from '@/utils'
 
 export type SearchBarProps = {
-  searchRef?: React.MutableRefObject<HTMLInputElement>
+  searchRef: React.MutableRefObject<HTMLInputElement>
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({ searchRef }) => {

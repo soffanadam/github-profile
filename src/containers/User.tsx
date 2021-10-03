@@ -1,3 +1,5 @@
+import { Repos } from '@/containers/Repos'
+import { UserInfo } from '@/components/UserInfo'
 import { LabelText } from '@/resources/LabelText'
 import { userState } from '@/selectors'
 import { getUser } from '@/slices/user'
@@ -11,6 +13,7 @@ import {
   useParams,
   useRouteMatch
 } from 'react-router'
+import { UserRoute } from './UserRoute'
 
 export const User: React.FC = () => {
   // Router
@@ -37,7 +40,7 @@ export const User: React.FC = () => {
   }, [dispatch, searching, loading, user, userName])
 
   /**
-   * Error like not found / etc, redirect to /
+   * Any error redirect to /
    */
   useEffect(() => {
     if (error) history.push('/')
@@ -50,22 +53,12 @@ export const User: React.FC = () => {
       ) : (
         user && (
           <>
-            <div className="bg-gray-200">
-              <div className="container p-5 max-w-2xl">
-                <h1 className="text-2xl">{user.name}</h1>
-                <div className="text-gray-500">
-                  {LabelText.GITHUB_REPOSITORIES}
-                </div>
-              </div>
-            </div>
-            <div className="container p-5 max-w-2xl">
-              <Switch>
-                <Route exact path={path}>
-                  repositories
-                </Route>
-                <Route path={`${path}/laravel`}>laravel</Route>
-              </Switch>
-            </div>
+            <Switch>
+              <UserRoute exact path={path} title={UserInfo}>
+                <Repos />
+              </UserRoute>
+              <Route path={`${path}/laravel`}>laravel</Route>
+            </Switch>
           </>
         )
       )}
