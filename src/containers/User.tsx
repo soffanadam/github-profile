@@ -13,7 +13,6 @@ import {
   useParams,
   useRouteMatch
 } from 'react-router'
-import { UserRoute } from './UserRoute'
 
 export const User: React.FC = () => {
   // Router
@@ -53,10 +52,15 @@ export const User: React.FC = () => {
       ) : (
         user && (
           <>
+            <div className="bg-gray-100 shadow">
+              <div className="container py-5 max-w-2xl">
+                <UserInfo user={user} />
+              </div>
+            </div>
             <Switch>
-              <UserRoute exact path={path} title={UserInfo}>
+              <Route exact path={path}>
                 <Repos />
-              </UserRoute>
+              </Route>
               <Route path={`${path}/laravel`}>laravel</Route>
             </Switch>
           </>

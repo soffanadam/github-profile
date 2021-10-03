@@ -1,41 +1,45 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { TestID } from '@/resources/TestID'
 import { LabelText } from '@/resources/LabelText'
-import { useDispatch, useSelector } from 'react-redux'
-import { userState } from '@/selectors'
-import { searchUser, setError } from '@/slices/user'
 import { classNames } from '@/utils'
 
 export type SearchBarProps = {
+  prefill?: string
   searchRef: React.MutableRefObject<HTMLInputElement>
+  error?: string
+  disabled?: boolean
+  onChange: () => void
+  onSubmit: (userName: string) => void
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ searchRef }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({
+  prefill,
+  searchRef,
+  error,
+  disabled,
+  onChange,
+  onSubmit
+}) => {
   // State
-  const { user, searching, error } = useSelector(userState)
-  const [userName, setUserName] = useState('')
+  const [userName, setUserName] = useState(prefill ? prefill : '')
 
   // Handlers
-  const dispatch = useDispatch()
-
   const inputChangeHandler = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
-    if (error) dispatch(setError(''))
     setUserName(target.value)
+    onChange()
   }
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault()
     if (!userName) return
 
-    dispatch(searchUser(userName))
+    onSubmit(userName)
   }
 
-  // Hooks
   useEffect(() => {
-    if (!user) return
-    setUserName(user.login)
-  }, [user])
+    if (prefill) setUserName(prefill)
+  }, [prefill])
 
   return (
     <form onSubmit={submitHandler}>
@@ -43,7 +47,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchRef }) => {
         data-testid={TestID.SEARCH_BAR}
         ref={searchRef}
         value={userName}
-        disabled={searching}
+        disabled={disabled}
         placeholder={LabelText.INPUT_GITHUB_USERNAME}
         className={classNames(
           'py-2.5 px-5 w-full text-lg rounded shadow focus:shadow-lg focus:outline-none border',

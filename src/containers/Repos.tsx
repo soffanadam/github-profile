@@ -32,7 +32,7 @@ export const Repos: React.FC = () => {
   const listRepos = repos.map((repo) => <RepoItem repo={repo} key={repo.id} />)
 
   return (
-    <>
+    <div className="container py-10 max-w-2xl">
       <h1 className="mb-10 text-3xl">{LabelText.REPOSITORIES}</h1>
       {listRepos.length ? (
         <div className="flex flex-col space-y-4">{listRepos}</div>
@@ -48,6 +48,6 @@ export const Repos: React.FC = () => {
           LabelText.EMPTY_REPOSITORIES
         )}
       </div>
-    </>
+    </div>
   )
 }

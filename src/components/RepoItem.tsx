@@ -12,14 +12,13 @@ export type UserRouteProps = {
 export const RepoItem: React.FC<UserRouteProps> = ({ repo }) => {
   return (
     <div className="py-3 px-5 rounded shadow hover:shadow-md transition transform hover:scale-105">
-      <Link
-        to={`/${repo.owner.login}/${repo.name}`}
-        className="block text-2xl text-indigo-500"
-      >
-        {repo.name}
+      <Link to={`/${repo.owner.login}/${repo.name}`} className="group block">
+        <span className="inline-flex pb-1 mb-2 text-2xl text-indigo-500 group-hover:border-b border-indigo-500">
+          {repo.name}
+        </span>
+        {repo.description && <p className="mb-5">{repo.description}</p>}
       </Link>
-      {repo.description && <p>{repo.description}</p>}
-      <div className="flex mt-5 space-x-3">
+      <div className="flex mt-2 space-x-3">
         <Badge>
           <FiStar className="mr-2" />
           {repo.stargazers_count}
