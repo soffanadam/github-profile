@@ -20,7 +20,9 @@ export const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         <img src={user.avatar_url} className="object-cover w-full h-full" />
       </Link>
       <div className="flex-1">
-        <h1 className="text-2xl">{user.name || user.login}</h1>
+        <Link to={`/${user.login}`} className="text-2xl">
+          {user.name || user.login}
+        </Link>
         <div className="text-gray-500">{user.html_url}</div>
       </div>
     </div>

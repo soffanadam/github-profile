@@ -41,7 +41,7 @@ export const Header: React.FC = () => {
 
   return (
     <header
-      className="flex justify-center items-center p-5 bg-gray-400 transition-all"
+      className="flex sticky top-0 z-10 justify-center items-center p-5 bg-gray-500 bg-opacity-75 transition-all"
       style={{
         minHeight: location.pathname === '/' ? '100vh' : '0'
       }}

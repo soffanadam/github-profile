@@ -21,6 +21,19 @@ export interface Repo {
   owner: User
 }
 
+export interface Content {
+  name: string
+  path: string
+  type: string
+  html_url?: string
+}
+
+export interface ReadMe {
+  name: string
+  content: string
+  encoding: string
+}
+
 //==============================================================================
 // State
 //==============================================================================
@@ -40,9 +53,30 @@ export interface ReposState {
   loading: boolean
 }
 
+export interface RepoState {
+  repo: Repo | null
+  error: string
+  loading: boolean
+}
+
+export interface ContentsState {
+  contents: Content[]
+  readMe: ReadMe | null
+  error: string
+  loading: boolean
+}
+
 export interface RootState {
   userState: UserState
   reposState: ReposState
+  repoState: RepoState
+  contentsState: ContentsState
+}
+
+export interface GetContentsPayload {
+  userName: string
+  repoName: string
+  path?: string
 }
 
 //==============================================================================

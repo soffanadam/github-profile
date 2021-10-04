@@ -12,7 +12,7 @@ import {
   noMore,
   more
 } from '@/slices/repos'
-import { Repo, User } from '@/types'
+import { Repo } from '@/types'
 import { userState, reposState } from '@/selectors'
 import { LabelText } from '@/resources/LabelText'
 
@@ -23,7 +23,7 @@ function* getReposHandler() {
     yield put({ type: more.type })
 
     yield put({ type: loading.type })
-    const { user }: User = yield select(userState)
+    const { user } = yield select(userState)
     const payload: Repo[] = yield call(getReposRequest, user.login)
     yield put({ type: setPage.type, payload: 1 })
     yield put({ type: setRepos.type, payload })
@@ -38,8 +38,8 @@ function* getReposHandler() {
 
 function* getMoreReposHandler() {
   try {
-    const { user }: User = yield select(userState)
-    const { page, hasMore }: User = yield select(reposState)
+    const { user } = yield select(userState)
+    const { page, hasMore } = yield select(reposState)
 
     if (!hasMore) throw new Error(LabelText.END_OF_RESULTS)
 

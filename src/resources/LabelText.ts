@@ -5,5 +5,6 @@ export enum LabelText {
   LOADING = 'Loading',
   REPOSITORIES = 'Repositories',
   EMPTY_REPOSITORIES = 'This user has no repositories',
-  END_OF_RESULTS = 'End of results'
+  END_OF_RESULTS = 'End of results',
+  EMPTY_CONTENTS = 'Directory has no contents'
 }

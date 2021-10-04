@@ -13,6 +13,7 @@ import {
   useParams,
   useRouteMatch
 } from 'react-router'
+import { Repo } from './Repo'
 
 export const User: React.FC = () => {
   // Router
@@ -52,7 +53,7 @@ export const User: React.FC = () => {
       ) : (
         user && (
           <>
-            <div className="bg-gray-100 shadow">
+            <div className="px-5 bg-gray-100 shadow">
               <div className="container py-5 max-w-2xl">
                 <UserInfo user={user} />
               </div>
@@ -61,7 +62,9 @@ export const User: React.FC = () => {
               <Route exact path={path}>
                 <Repos />
               </Route>
-              <Route path={`${path}/laravel`}>laravel</Route>
+              <Route path={`${path}/:repoName`}>
+                <Repo />
+              </Route>
             </Switch>
           </>
         )
