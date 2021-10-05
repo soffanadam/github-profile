@@ -8,8 +8,10 @@ export interface PlainObject<T = any> {
 //==============================================================================
 
 export interface User {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [anyProp: string]: any
+  login: string
+  name: string | null
+  html_url: string
+  avatar_url: string
 }
 
 export interface Repo {
@@ -99,4 +101,14 @@ export class ApiError extends Error {
 export interface ApiErrorResponse {
   status?: number
   body?: unknown
+}
+
+//==============================================================================
+// Enum
+//==============================================================================
+export enum ContentType {
+  DIR = 'dir',
+  FILE = 'file',
+  SUBMODULE = 'submodule',
+  SYMLINK = 'symlink'
 }

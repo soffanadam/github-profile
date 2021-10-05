@@ -1,21 +1,27 @@
-import { Content, PlainObject } from '@/types'
+import { Content, ContentType, PlainObject } from '@/types'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-type ContentLinkProps = {
+export type ContentLinkProps = {
+  dataTestID?: string
   repoUrl: string
   content: Content
 }
 
 export const ContentLink: React.FC<ContentLinkProps & PlainObject> = ({
+  dataTestID,
   repoUrl,
   content,
   children,
   ...rest
 }) => {
-  if (content.type === 'dir') {
+  if (content.type === ContentType.DIR) {
     return (
-      <Link to={`${repoUrl}/${content.path}`} {...rest}>
+      <Link
+        data-testid={dataTestID}
+        to={`${repoUrl}/${content.path}`}
+        {...rest}
+      >
         {children}
       </Link>
     )
@@ -23,11 +29,21 @@ export const ContentLink: React.FC<ContentLinkProps & PlainObject> = ({
 
   if (content.html_url) {
     return (
-      <a href={content.html_url} target="_blank" rel="noreferrer" {...rest}>
+      <a
+        data-testid={dataTestID}
+        href={content.html_url}
+        target="_blank"
+        rel="noreferrer"
+        {...rest}
+      >
         {children}
       </a>
     )
   }
 
-  return <div {...rest}>{children}</div>
+  return (
+    <div data-testid={dataTestID} {...rest}>
+      {children}
+    </div>
+  )
 }

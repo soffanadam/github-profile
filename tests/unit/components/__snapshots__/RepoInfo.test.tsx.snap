@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RepoInfo /> renders correctly 1`] = `
+<a
+  class="group block"
+  data-testid="repo-info"
+  href="/google/github-profile"
+>
+  <span
+    class="inline-flex pb-1 mb-2 text-2xl text-indigo-500 border-b border-transparent group-hover:border-indigo-300"
+    data-testid="repo-info-name"
+  >
+    github-profile
+  </span>
+  <p
+    class="mb-5"
+    data-testid="repo-info-description"
+  >
+    Lorem ipsum dolor sit amet
+  </p>
+</a>
+`;

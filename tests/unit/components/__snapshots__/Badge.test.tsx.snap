@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Badge /> renders correctly 1`] = `
+<span
+  class="inline-flex items-center py-0.5 px-2.5 text-gray-500 bg-white rounded border"
+  data-testid="badge"
+>
+  text
+</span>
+`;

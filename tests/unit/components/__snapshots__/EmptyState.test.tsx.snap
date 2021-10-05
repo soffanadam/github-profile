@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EmptyState /> renders correctly 1`] = `
+<div
+  class="py-3 px-5 text-xl mt-4"
+  data-testid="empty-state"
+>
+  text
+</div>
+`;

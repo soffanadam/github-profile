@@ -11,6 +11,8 @@ export type SearchFormProps = {
   onSubmit: (userName: string) => void
 }
 
+export const ERROR_CLASS = 'border-yellow-500'
+
 export const SearchForm: React.FC<SearchFormProps> = ({
   prefill,
   searchRef,
@@ -45,7 +47,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
   }, [error])
 
   return (
-    <form onSubmit={submitHandler}>
+    <form data-testid={TestID.SEARCH_FORM} onSubmit={submitHandler}>
       <input
         data-testid={TestID.SEARCH_FORM_INPUT}
         ref={searchRef}
@@ -54,7 +56,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
         placeholder={LabelText.INPUT_GITHUB_USERNAME}
         className={classNames(
           'py-2.5 px-5 w-full text-lg rounded shadow focus:shadow-lg focus:outline-none border',
-          inputError ? 'border-yellow-500' : 'border-transparent'
+          inputError ? ERROR_CLASS : 'border-transparent'
         )}
         onChange={inputChangeHandler}
       />

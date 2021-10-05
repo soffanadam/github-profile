@@ -12,11 +12,11 @@ export const RepoBadges: React.FC<RepoBadgesProps> = ({ repo }) => {
     <div className="flex mt-2 space-x-3">
       <Badge>
         <FiStar className="mr-2" />
-        {repo.stargazers_count}
+        <span data-stargazers-count>{repo.stargazers_count}</span>
       </Badge>
       <Badge>
         <FiGitBranch className="mr-2" />
-        {repo.forks_count}
+        <span data-forks-count>{repo.forks_count}</span>
       </Badge>
     </div>
   )

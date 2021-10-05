@@ -1,9 +1,22 @@
-import { PlainObject } from '@/types'
 import { classNames } from '@/utils'
 import React from 'react'
 
-export const EmptyState: React.FC<PlainObject> = ({ children, className }) => {
+export type EmptyStateProps = {
+  dataTestID?: string
+  className: string
+}
+
+export const EmptyState: React.FC<EmptyStateProps> = ({
+  children,
+  dataTestID,
+  className
+}) => {
   return (
-    <div className={classNames('py-3 px-5 text-xl', className)}>{children}</div>
+    <div
+      data-testid={dataTestID}
+      className={classNames('py-3 px-5 text-xl', className)}
+    >
+      {children}
+    </div>
   )
 }
