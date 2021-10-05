@@ -12,5 +12,7 @@ export enum TestID {
   USER_INFO_NAME = 'user-info-name',
   USER_INFO_LINK = 'user-info-link',
   USER_INFO_AVATAR = 'user-info-avatar',
-  USER_INFO_HTML_URL = 'user-info-html-url'
+  USER_INFO_HTML_URL = 'user-info-html-url',
+  REPOS_LIST = 'repos-list',
+  REPOS_LOADING = 'repos-loading'
 }

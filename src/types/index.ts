@@ -12,6 +12,7 @@ export interface User {
   name: string | null
   html_url: string
   avatar_url: string
+  public_repos: number
 }
 
 export interface Repo {

@@ -5,9 +5,9 @@ import { LabelText } from '@/resources/LabelText'
 import { TestID } from '@/resources/TestID'
 import { entryPoint } from './testHelperEnums'
 
-const defaultInit = () => {
+const visit = (url = entryPoint) => {
   before(() => {
-    cy.visit(entryPoint)
+    cy.visit(url)
 
     // wait for things to settle .. like waiting for Welcome Note to resolve
     // increasing due to occasional flaky starts
@@ -47,6 +47,10 @@ const wrapWithTestIDTag = (testIDEnum: TestID | string) => {
   return '[data-testid="' + testIDEnum + '"]'
 }
 
+const notification = () => {
+  return cy.get('.Toastify__toast-body div:last-child')
+}
+
 export {
   clickDynamicTestID,
   clickTestID,
@@ -55,6 +59,7 @@ export {
   testIDShouldContain,
   testIDShouldExist,
   testIDShouldNotExist,
-  defaultInit,
-  wrapWithTestIDTag
+  visit,
+  wrapWithTestIDTag,
+  notification
 }

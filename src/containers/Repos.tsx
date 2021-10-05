@@ -1,11 +1,12 @@
 import { LabelText } from '@/resources/LabelText'
 import { reposState, userState } from '@/selectors'
-import { getMoreRepos, getRepos } from '@/slices/repos'
-import React, { useEffect } from 'react'
+import { getMoreRepos } from '@/slices/repos'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RepoItem } from '../components/RepoItem'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { EmptyState } from '@/components/EmptyState'
+import { TestID } from '@/resources/TestID'
 
 export const Repos: React.FC = () => {
   // State
@@ -36,13 +37,20 @@ export const Repos: React.FC = () => {
         {LabelText.REPOSITORIES}
       </h1>
       {listRepos.length ? (
-        <div className="flex flex-col space-y-4">{listRepos}</div>
+        <div
+          data-testid={TestID.REPOS_LIST}
+          className="flex flex-col space-y-4"
+        >
+          {listRepos}
+        </div>
       ) : null}
       <EmptyState className="mt-4">
         {error ? (
           error
         ) : loading || (hasMore && listRepos.length) ? (
-          <div ref={sentryRef}>{LabelText.LOADING}...</div>
+          <div data-testid={TestID.REPOS_LOADING} ref={sentryRef}>
+            {LabelText.LOADING}...
+          </div>
         ) : listRepos.length ? (
           LabelText.END_OF_RESULTS
         ) : (

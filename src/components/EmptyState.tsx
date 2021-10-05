@@ -3,7 +3,7 @@ import React from 'react'
 
 export type EmptyStateProps = {
   dataTestID?: string
-  className: string
+  className?: string
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({

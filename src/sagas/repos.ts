@@ -25,12 +25,13 @@ function* getReposHandler() {
 
 function* getMoreReposHandler() {
   try {
-    const { userName, page, hasMore } = yield select(reposState)
+    const { user } = yield select(userState)
+    const { page, hasMore } = yield select(reposState)
 
     if (!hasMore) throw new Error(LabelText.END_OF_RESULTS)
 
     const nextPage = page + 1
-    const payload: Repo[] = yield call(getReposRequest, userName, {
+    const payload: Repo[] = yield call(getReposRequest, user.login, {
       page: nextPage
     })
     yield put(getMoreReposSuccess(payload))

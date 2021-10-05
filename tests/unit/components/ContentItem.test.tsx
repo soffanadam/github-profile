@@ -36,7 +36,7 @@ describe('<ContentItem />', () => {
     ).toBeVisible()
   })
 
-  it('is a sumlink', () => {
+  it('is a symlink', () => {
     const { container } = renderComponent(
       withContentItemProps(ContentType.SYMLINK)
     )
