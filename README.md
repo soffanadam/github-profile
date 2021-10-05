@@ -1,12 +1,14 @@
-# React Tailwindcss Boilerplate build with Vite
+# React Github Profile
 
-This is a [ReactJS](https://reactjs.org) + [Vite](https://vitejs.dev) boilerplate to be used with [Tailwindcss](https://tailwindcss.com).
+This is kind a [ReactJS](https://reactjs.org) + [TypeScript] + [Vite](https://vitejs.dev) project that search the github username then browse the repositories and finally the contents.
 
 ## What is inside?
 
 This project uses many tools like:
 
 - [ReactJS](https://reactjs.org)
+- [Redux]
+- [ReduxSaga]
 - [Vite](https://vitejs.dev)
 - [TypeScript](https://www.typescriptlang.org)
 - [Jest](https://jestjs.io)
@@ -14,22 +16,11 @@ This project uses many tools like:
 - [Tailwindcss](https://tailwindcss.com)
 - [Eslint](https://eslint.org)
 - [Prettier](https://prettier.io)
+- [Cypress](https://cypress.io)
 
 ## Getting Started
 
 ### Install
-
-Create the project.
-
-```bash
-npx degit joaopaulomoraes/reactjs-vite-tailwindcss-boilerplate my-app
-```
-
-Access the project directory.
-
-```bash
-cd my-app
-```
 
 Install dependencies.
 
@@ -59,6 +50,8 @@ npm run build
 
 ```bash
 npm run test
+npm run test:e2e
+npm run test:e2e:open
 ```
 
 ## License
