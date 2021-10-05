@@ -14,46 +14,24 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     // eslint-disable-next-line no-empty-pattern, @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-    searchUser: (state, {}: PayloadAction<string>) => {},
-
-    // eslint-disable-next-line no-empty-pattern, @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-    getUser: (state, {}: PayloadAction<string>) => {},
-
-    searching: (state) => {
-      state.searching = true
-    },
-
-    searched: (state) => {
-      state.searching = false
-    },
-
-    loading: (state) => {
+    getUser: (state, { payload }: PayloadAction<string>) => {
       state.loading = true
+      state.error = ''
     },
 
-    loaded: (state) => {
+    getUserSuccess: (state, { payload }: PayloadAction<User>) => {
+      state.user = payload
       state.loading = false
     },
 
-    setError: (state, { payload }: PayloadAction<string>) => {
+    getUserError: (state, { payload }: PayloadAction<string>) => {
+      state.user = null
       state.error = payload
-    },
-
-    setUser: (state, { payload }: PayloadAction<User | null>) => {
-      state.user = payload
+      state.loading = false
     }
   }
 })
 
-export const {
-  searchUser,
-  getUser,
-  loading,
-  loaded,
-  setError,
-  setUser,
-  searching,
-  searched
-} = userSlice.actions
+export const { getUser, getUserSuccess, getUserError } = userSlice.actions
 
 export default userSlice.reducer

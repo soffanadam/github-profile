@@ -60,6 +60,7 @@ export interface RepoState {
 }
 
 export interface ContentsState {
+  path: string
   contents: Content[]
   readMe: ReadMe | null
   error: string
@@ -73,10 +74,13 @@ export interface RootState {
   contentsState: ContentsState
 }
 
-export interface GetContentsPayload {
+//==============================================================================
+// Actions Payload
+//==============================================================================
+
+export interface GetRepoPayload {
   userName: string
   repoName: string
-  path?: string
 }
 
 //==============================================================================

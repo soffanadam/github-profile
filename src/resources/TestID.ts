@@ -1,3 +1,4 @@
 export enum TestID {
-  SEARCH_BAR = 'search-bar'
+  SEARCH_FORM = 'search-form',
+  SEARCH_FORM_INPUT = 'search-form-input'
 }

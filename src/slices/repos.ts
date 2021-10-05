@@ -13,57 +13,42 @@ const reposSlice = createSlice({
   name: 'repos',
   initialState,
   reducers: {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    getRepos: () => {},
-
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    getMoreRepos: () => {},
-
-    setPage: (state, { payload }: PayloadAction<number>) => {
-      state.page = payload
-    },
-
-    loading: (state) => {
+    getRepos: (state) => {
+      state.repos = []
+      state.hasMore = true
       state.loading = true
     },
 
-    loaded: (state) => {
+    getReposSuccess: (state, { payload }: PayloadAction<Repo[]>) => {
+      state.page = 1
+      state.repos = payload
       state.loading = false
     },
 
-    setError: (state, { payload }: PayloadAction<string>) => {
+    getReposError: (state, { payload }: PayloadAction<string>) => {
       state.error = payload
+      state.loading = false
     },
 
-    setRepos: (state, { payload }: PayloadAction<Repo[]>) => {
-      state.repos = payload
+    getMoreRepos: (state) => {
+      state.loading = true
     },
 
-    pushRepos: (state, { payload }: PayloadAction<Repo[]>) => {
+    getMoreReposSuccess: (state, { payload }: PayloadAction<Repo[]>) => {
+      state.page++
       state.repos = state.repos.concat(payload)
-    },
-
-    more: (state) => {
-      state.hasMore = true
-    },
-
-    noMore: (state) => {
-      state.hasMore = false
+      state.hasMore = payload.length != 0
+      state.loading = false
     }
   }
 })
 
 export const {
   getRepos,
+  getReposSuccess,
+  getReposError,
   getMoreRepos,
-  setPage,
-  loading,
-  loaded,
-  setError,
-  setRepos,
-  pushRepos,
-  more,
-  noMore
+  getMoreReposSuccess
 } = reposSlice.actions
 
 export default reposSlice.reducer

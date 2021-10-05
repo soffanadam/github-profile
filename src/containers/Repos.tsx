@@ -19,10 +19,6 @@ export const Repos: React.FC = () => {
   }
 
   // Hooks
-  useEffect(() => {
-    dispatch(getRepos())
-  }, [dispatch])
-
   const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage: hasMore,

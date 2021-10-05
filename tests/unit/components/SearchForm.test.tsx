@@ -1,16 +1,19 @@
 import React, { createRef } from 'react'
 import { fireEvent, render } from '@testing-library/react'
 
-import { SearchBar, SearchBarProps } from '@/components/SearchBar'
+import { SearchForm, SearchFormProps } from '@/components/SearchForm'
 import { TestID } from '@/resources/TestID'
 
 const renderComponent = () => {
-  const enabledProps: SearchBarProps = {
+  const enabledProps: SearchFormProps = {
+    prefill: '',
     searchRef: createRef() as React.MutableRefObject<HTMLInputElement>,
-    userName: ''
+    onSubmit: () => {
+      // ..
+    }
   }
 
-  return render(<SearchBar {...enabledProps} />)
+  return render(<SearchForm {...enabledProps} />)
 }
 
 describe('<SearchBar />', () => {
@@ -22,8 +25,10 @@ describe('<SearchBar />', () => {
   it('searches for text', () => {
     const { getByTestId } = renderComponent()
 
-    fireEvent.change(getByTestId(TestID.SEARCH_BAR), {
+    fireEvent.change(getByTestId(TestID.SEARCH_FORM_INPUT), {
       target: { value: 'welcome' }
     })
+
+    fireEvent.submit(getByTestId(TestID.SEARCH_FORM))
   })
 })

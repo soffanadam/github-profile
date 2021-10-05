@@ -4,23 +4,23 @@ import { EmptyState } from '@/components/EmptyState'
 import { LabelText } from '@/resources/LabelText'
 import { contentsState } from '@/selectors'
 import { getContents } from '@/slices/contents'
-import { Content, GetContentsPayload } from '@/types'
+import { Content, PlainObject } from '@/types'
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 
 export const Contents: React.FC = () => {
   // State
-  const { userName, repoName, path }: GetContentsPayload = useParams()
+  const { userName, repoName, path }: PlainObject = useParams()
   const { contents, loading, error } = useSelector(contentsState)
 
   // Hooks
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getContents({ userName, repoName, path }))
-  }, [userName, repoName, path, dispatch])
+    dispatch(getContents(path))
+  }, [path, dispatch])
 
-  // Computed
+  // Computed / Memo
   const parentPath = path ? path.substring(0, path.lastIndexOf('/')) : null
   const parentContent: Content | null =
     parentPath != null ? { name: '..', path: parentPath, type: 'dir' } : null

@@ -1,51 +1,49 @@
-import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest, select } from 'redux-saga/effects'
 import { getRepoContentsRequest, getRepoContentsReadMeRequest } from '@/api'
 import {
   getContents,
-  loading,
-  loaded,
-  setError,
-  setContents,
+  getContentsSuccess,
+  getContentsError,
   setReadMe
 } from '@/slices/contents'
-import { PayloadAction } from '@reduxjs/toolkit'
-import { Content, GetContentsPayload, ReadMe } from '@/types'
+import { Content, ContentsState, ReadMe } from '@/types'
+import { contentsState, repoState, userState } from '@/selectors'
 
-function* getContentsAndReadMeHandler({
-  payload
-}: PayloadAction<GetContentsPayload>) {
-  yield all([getContentsHandler(payload), getReadMeHandler(payload)])
-}
-
-function* getContentsHandler({ userName, repoName, path }: GetContentsPayload) {
+function* getContentsHandler() {
   try {
-    // Reset
-    yield put({ type: setContents.type, payload: [] })
-
-    yield put({ type: loading.type })
+    const { user } = yield select(userState)
+    const { repo } = yield select(repoState)
+    const { path } = yield select(contentsState)
     const contents: Content[] = yield call(
       getRepoContentsRequest,
-      userName,
-      repoName,
+      user.login,
+      repo.name,
       path
     )
-    yield put({ type: setContents.type, payload: contents })
+    yield put({ type: getContentsSuccess.type, payload: contents })
+    yield findReadMe()
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     const payload: string = error.message
-    yield put({ type: setError.type, payload })
+    yield put({ type: getContentsError.type, payload })
   }
-
-  yield put({ type: loaded.type })
 }
 
-function* getReadMeHandler({ userName, repoName, path }: GetContentsPayload) {
-  yield put({ type: setReadMe.type, payload: null })
+function* findReadMe() {
   try {
+    const { contents, path }: ContentsState = yield select(contentsState)
+
+    if (contents.findIndex((content) => content.name === 'README.md') < 0)
+      return
+
+    const { user } = yield select(userState)
+    const { repo } = yield select(repoState)
+
+    yield put({ type: setReadMe.type, payload: null })
     const readMe: ReadMe = yield call(
       getRepoContentsReadMeRequest,
-      userName,
-      repoName,
+      user.login,
+      repo.name,
       path
     )
     yield put({ type: setReadMe.type, payload: readMe })
@@ -57,7 +55,7 @@ function* getReadMeHandler({ userName, repoName, path }: GetContentsPayload) {
 
 // If any of these functions are dispatched, invoke the appropriate saga
 function* contentsSaga() {
-  yield takeLatest(getContents.type, getContentsAndReadMeHandler)
+  yield takeLatest(getContents.type, getContentsHandler)
 }
 
 export default contentsSaga

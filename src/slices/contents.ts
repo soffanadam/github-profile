@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Content, ContentsState, GetContentsPayload, ReadMe } from '@/types'
+import { Content, ContentsState, ReadMe } from '@/types'
 
 export const initialState: ContentsState = {
+  path: '',
   contents: [],
   readMe: null,
   error: '',
@@ -13,22 +14,21 @@ const contentsSlice = createSlice({
   initialState,
   reducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-    getContents: (state, { payload }: PayloadAction<GetContentsPayload>) => {},
-
-    loading: (state) => {
+    getContents: (state, { payload }: PayloadAction<string | undefined>) => {
+      state.path = payload ? payload : ''
+      state.contents = []
+      state.readMe = null
       state.loading = true
     },
 
-    loaded: (state) => {
+    getContentsSuccess: (state, { payload }: PayloadAction<Content[]>) => {
+      state.contents = payload
       state.loading = false
     },
 
-    setError: (state, { payload }: PayloadAction<string>) => {
+    getContentsError: (state, { payload }: PayloadAction<string>) => {
       state.error = payload
-    },
-
-    setContents: (state, { payload }: PayloadAction<Content[]>) => {
-      state.contents = payload
+      state.loading = false
     },
 
     setReadMe: (state, { payload }: PayloadAction<ReadMe>) => {
@@ -37,13 +37,7 @@ const contentsSlice = createSlice({
   }
 })
 
-export const {
-  getContents,
-  loading,
-  loaded,
-  setError,
-  setContents,
-  setReadMe
-} = contentsSlice.actions
+export const { getContents, getContentsSuccess, getContentsError, setReadMe } =
+  contentsSlice.actions
 
 export default contentsSlice.reducer
